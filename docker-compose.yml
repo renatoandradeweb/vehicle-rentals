@@ -1,0 +1,31 @@
+version: "lastest"
+
+services:
+  database_veiculos:
+    image: postgres:latest
+    container_name: veiculos_postgres
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: docker
+      POSTGRES_DB: veiculos_bd
+    volumes:
+      - pgdata:/data/postgres
+
+  app:
+    build: .
+    container_name: veiculos_app
+    ports:
+      - 3333:3333
+    volumes:
+      - .:/usr/app
+
+volumes:
+  pgdata:
+    driver: local
+
+networks:
+  default:
+    driver: host
